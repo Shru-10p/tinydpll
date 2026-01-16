@@ -1,0 +1,40 @@
+# Build artifacts
+*.o
+*.a
+*.so
+*.dylib
+*.exe
+*.dll
+
+# Build directories
+build/
+dist/
+cmake-build-*/
+
+# Compiled Python files
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.code-workspace
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+
+# Executables
+tinydpll
+
+# Dependencies
+*.gcov
+*.gcno
+*.gcda
