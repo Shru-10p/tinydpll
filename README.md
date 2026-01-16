@@ -2,10 +2,6 @@
 
 An mplementation of the DPLL algorithm for solving Boolean satisfiability (SAT) problems. Written in C++.
 
-## Overview
-
-TinyDPLL parses DIMACS CNF files and determines satisfiability using the DPLL algorithm with optimizations. The solver returns a satisfying assignment as a vector of 0's and 1's for SAT formulas
-
 ## Building
 
 Build the project using the provided Makefile:
@@ -36,29 +32,48 @@ Run the solver with a DIMACS CNF file:
 
 ## Generating Test Cases
 
-Use the included Python script to generate random DIMACS files:
+Use the included Python script to generate random DIMACS CNF files for testing:
 
 ```bash
-# Generate with default parameters (50 vars, 200 clauses)
+# Generate both SAT and UNSAT formulas (default: 50 vars, 200 clauses)
 python3 scripts/generate.py
+
+# Generate only SAT formulas
+python3 scripts/generate.py --type sat
+
+# Generate only UNSAT formulas (using pigeonhole principle)
+python3 scripts/generate.py --type unsat-pigeonhole
+
+# Generate UNSAT formulas (using direct contradiction)
+python3 scripts/generate.py --type unsat-contradiction
 
 # Specify custom parameters
 python3 scripts/generate.py --vars 100 --clauses 400
 
+# Control clause length (number of literals per clause)
+python3 scripts/generate.py --min-clause-length 3 --max-clause-length 6
+
 # Use a seed for reproducibility
 python3 scripts/generate.py --vars 50 --clauses 200 --seed 42
 
-# Control clause length
-python3 scripts/generate.py --min-clause-length 3 --max-clause-length 6
+# Custom output directory
+python3 scripts/generate.py --output-dir my_tests/
 
-# Custom output location
-python3 scripts/generate.py -o tests/cnf/my_test.cnf --vars 75 --clauses 300
+# Custom output file (for single formula type)
+python3 scripts/generate.py --type sat -o tests/cnf/my_test.cnf --vars 75 --clauses 300
 ```
 
 Then test the generated files:
 
 ```bash
-./build/tinydpll tests/cnf/random_50_200.cnf
+./build/tinydpll tests/cnf/random_sat_50_200.cnf
+./build/tinydpll tests/cnf/random_unsat_50_200.cnf
+```
+
+Or run all test cases at once:
+
+```bash
+python3 tests/check_all.py
 ```
 
 ## DIMACS CNF Format

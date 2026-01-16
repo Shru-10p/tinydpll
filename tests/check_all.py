@@ -23,13 +23,11 @@ def parse_expected_result(cnf_file):
                             return 'UNSAT'
                         elif 'SAT' in line:
                             return 'SAT'
-                    # Also check for direct mentions
                     elif 'UNSAT' in line.upper() and 'EXPECTED' not in line.upper():
                         return 'UNSAT'
                     elif 'SAT' in line.upper() and 'UNSAT' not in line.upper():
                         return 'SAT'
                 elif line.startswith('p'):
-                    # Stop at problem line
                     break
     except Exception as e:
         print(f"Warning: Could not parse {cnf_file}: {e}")
@@ -66,7 +64,6 @@ def run_solver(solver_path, cnf_file):
 
 
 def main():
-    # Find solver binary
     solver_path = Path('build/tinydpll')
 
     if not solver_path.exists():
@@ -74,7 +71,6 @@ def main():
         print("Please run 'make' to build the solver first.")
         sys.exit(1)
 
-    # Find all CNF files
     cnf_dir = Path('tests/cnf')
 
     if not cnf_dir.exists():
@@ -120,12 +116,10 @@ def main():
             failed += 1
             results.append((filename, expected, actual, status, output))
 
-    # Print results
     for filename, expected, actual, status, details in results:
         expected_str = expected if expected else "?"
         print(f"{status:<12} {filename:<40} Expected: {expected_str:<6} Got: {actual}")
 
-        # Print details for failures and errors
         if status in ['FAIL', 'ERROR'] and details:
             print(f"  Details: {details[:200]}")
             if len(details) > 200:
