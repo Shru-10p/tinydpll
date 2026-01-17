@@ -1,6 +1,6 @@
-# TinyDPLL - DPLL SAT Solver in C++
+# TinyDPLL - DPLL SAT Solver
 
-An mplementation of the DPLL algorithm for solving Boolean satisfiability (SAT) problems. Written in C++.
+A DPLL algorithm implementation for solving Boolean satisfiability (SAT) problems. Features a C++ solver backend with a modern web interface for interactive formula generation and solving.
 
 ## Building
 
@@ -30,51 +30,38 @@ Run the solver with a DIMACS CNF file:
 ./build/tinydpll <file.cnf>
 ```
 
-## Generating Test Cases
+## Web Interface
 
-Use the included Python script to generate random DIMACS CNF files for testing:
-
-```bash
-# Generate both SAT and UNSAT formulas (default: 50 vars, 200 clauses)
-python3 scripts/generate.py
-
-# Generate only SAT formulas
-python3 scripts/generate.py --type sat
-
-# Generate only UNSAT formulas (using pigeonhole principle)
-python3 scripts/generate.py --type unsat-pigeonhole
-
-# Generate UNSAT formulas (using direct contradiction)
-python3 scripts/generate.py --type unsat-contradiction
-
-# Specify custom parameters
-python3 scripts/generate.py --vars 100 --clauses 400
-
-# Control clause length (number of literals per clause)
-python3 scripts/generate.py --min-clause-length 3 --max-clause-length 6
-
-# Use a seed for reproducibility
-python3 scripts/generate.py --vars 50 --clauses 200 --seed 42
-
-# Custom output directory
-python3 scripts/generate.py --output-dir my_tests/
-
-# Custom output file (for single formula type)
-python3 scripts/generate.py --type sat -o tests/cnf/my_test.cnf --vars 75 --clauses 300
-```
-
-Then test the generated files:
+Launch the interactive web frontend to generate and solve formulas:
 
 ```bash
-./build/tinydpll tests/cnf/random_sat_50_200.cnf
-./build/tinydpll tests/cnf/random_unsat_50_200.cnf
+python3 web/app.py
 ```
 
-Or run all test cases at once:
+Then open http://localhost:5000 in your browser.
+
+**Features:**
+
+- Generate random 3-SAT formulas with custom parameters
+- Visualize CNF formulas in DIMACS format
+- Solve formulas with the DPLL solver
+- View solution assignments and timing information
+
+## Running Tests
+
+The test runner generates test cases dynamically and validates the solver:
 
 ```bash
-python3 tests/check_all.py
+python3 tests/tests.py
 ```
+
+**What it tests:**
+
+- Simple satisfiable and unsatisfiable formulas
+- Empty formula (trivially SAT)
+- Randomly generated 3-SAT instances
+
+Exit code 0 if all tests pass, 1 if any fail.
 
 ## DIMACS CNF Format
 
@@ -109,12 +96,20 @@ tinydpll/
 │   ├── dimacs.cpp       # DIMACS file parser implementation
 │   └── dpll.cpp         # Core DPLL algorithm implementation
 ├── scripts/
-│   └── generate.py      # Random DIMACS file generator
+│   └── generate.py      # Random DIMACS formula generator
 ├── tests/
-│   ├── cnf/
-│   │   └── *.cnf        # Test cases
-│   └── check_all.py     # Check all test cases
+│   └── tests.py         # Automated test runner
+├── web/
+│   ├── app.py           # Flask web server
+│   ├── static/
+│   │   ├── css/
+│   │   │   └── style.css       # UI styling
+│   │   └── js/
+│   │       └── app.js          # Frontend logic
+│   └── templates/
+│       └── index.html          # Web interface
 ├── build/               # Compiled binaries (created by make)
 ├── Makefile             # Build configuration
+├── .gitignore           # Git ignore rules
 └── README.md            # This file
 ```

@@ -16,6 +16,12 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.egg-info/
+.pytest_cache/
+
+# Virtual environments
+venv/
+env/
+.env
 
 # IDE and editor files
 .vscode/
@@ -26,15 +32,14 @@ __pycache__/
 .DS_Store
 *.code-workspace
 
-# CMake
-CMakeFiles/
-CMakeCache.txt
-cmake_install.cmake
+# Flask
+instance/
+.webassets-cache
 
-# Executables
-tinydpll
+# Temporary files
+*.tmp
+*.cnf.tmp
 
-# Dependencies
-*.gcov
-*.gcno
-*.gcda
+# OS files
+.DS_Store
+Thumbs.db

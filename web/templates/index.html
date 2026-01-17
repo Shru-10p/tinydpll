@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TinyDPLL - SAT Lab</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <div class="badge" id="statusChip">Loading…</div>
+                <h1>TinyDPLL SAT Lab</h1>
+                <p class="lede">Generate random CNF formulas in DIMACS format or paste your own, then run them through the C++ tinydpll solver.</p>
+            </div>
+        </header>
+
+        <div class="card-grid">
+            <section class="card">
+                <div class="label-row">
+                    <h2>Generate random formula</h2>
+                </div>
+
+                <div class="controls">
+                    <div>
+                        <label for="vars">Variables</label>
+                        <input id="vars" type="number" min="1" value="50">
+                    </div>
+                    <div>
+                        <label for="clauses">Clauses</label>
+                        <input id="clauses" type="number" min="1" value="200">
+                    </div>
+                    <div>
+                        <label for="minClause">Min clause length</label>
+                        <input id="minClause" type="number" min="1" value="2">
+                    </div>
+                    <div>
+                        <label for="maxClause">Max clause length</label>
+                        <input id="maxClause" type="number" min="1" value="3">
+                    </div>
+                    <div>
+                        <label for="seed">Seed (optional)</label>
+                        <input id="seed" type="number" min="0" placeholder="random">
+                    </div>
+                </div>
+
+                <div class="inline-actions">
+                    <button id="generateBtn">Generate</button>
+                </div>
+            </section>
+
+            <section class="card">
+                <div class="label-row">
+                    <h2>Input</h2>
+                    <button class="secondary" id="fillSample" type="button">Load sample</button>
+                </div>
+                <textarea id="cnfInput" placeholder="Paste DIMACS CNF or generate on the left"></textarea>
+
+                <div class="inline-actions">
+                    <button id="solveBtn" type="button">Solve</button>
+                </div>
+
+                <div class="output-panel" id="output">Waiting for input…</div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

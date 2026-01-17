@@ -12,9 +12,10 @@ SATResult DPLLSolver::solve() {
 
     if (dpll(clauses)) {
         // Convert assignment to vector of 0's and 1's
+        // Only include assigned variables; unassigned default to 0
         std::vector<int> result;
         for (int i = 1; i <= num_vars; i++) {
-            result.push_back(assignment[i]);
+            result.push_back(assignment[i] == -1 ? 0 : assignment[i]);
         }
         return result;
     } else {
