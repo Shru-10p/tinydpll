@@ -1,51 +1,33 @@
-# TinyDPLL - DPLL SAT Solver
+# TinyDPLL
 
-A DPLL algorithm implementation for solving Boolean satisfiability (SAT) problems. Features a C++ solver backend with a modern web interface for interactive formula generation and solving.
+A DPLL algorithm implementation for solving Boolean satisfiability (SAT) problems.
 
-## Building
+Live link: [Render Deployment](https://tinydpll.onrender.com)
 
-Build the project using the provided Makefile:
+This app is deployed on Render using a Docker image.
 
-```bash
-make
-```
+## Local Run
 
-For debug builds with symbols:
+Run the web interface locally:
 
 ```bash
-make debug
+make clean && make && python3 web/app.py
 ```
 
-Clean build artifacts:
+Open http://localhost:5000 in your browser.
+
+Optional: Run with Docker locally
 
 ```bash
-make clean
+docker build -t tinydpll .
+docker run -p 5000:5000 tinydpll
 ```
-
-## Usage
-
-Run the solver with a DIMACS CNF file:
-
-```bash
-./build/tinydpll <file.cnf>
-```
-
-## Web Interface
-
-Launch the interactive web frontend to generate and solve formulas:
-
-```bash
-python3 web/app.py
-```
-
-Then open http://localhost:5000 in your browser.
 
 **Features:**
 
-- Generate random 3-SAT formulas with custom parameters
+- Generate random k-SAT formulas with custom parameters
 - Visualize CNF formulas in DIMACS format
-- Solve formulas with the DPLL solver
-- View solution assignments and timing information
+- View solution assignments
 
 ## Running Tests
 
@@ -88,28 +70,28 @@ p cnf 3 3
 ```none
 tinydpll/
 ├── include/
-│   ├── types.h          # Core type definitions (SATResult, UNSAT, Formula)
-│   ├── dimacs.h         # DIMACS parser interface
-│   └── dpll.h           # DPLL solver class declaration
+│   ├── types.h             # Core type definitions
+│   ├── dimacs.h            # DIMACS parser interface
+│   └── dpll.h              # DPLL solver class declaration
 ├── src/
-│   ├── main.cpp         # CLI entry point and result output
-│   ├── dimacs.cpp       # DIMACS file parser implementation
-│   └── dpll.cpp         # Core DPLL algorithm implementation
+│   ├── main.cpp            # CLI entry point and result output
+│   ├── dimacs.cpp          # DIMACS file parser implementation
+│   └── dpll.cpp            # Core DPLL algorithm implementation
 ├── scripts/
-│   └── generate.py      # Random DIMACS formula generator
+│   └── generate.py         # Random DIMACS formula generator
 ├── tests/
-│   └── tests.py         # Automated test runner
+│   └── tests.py            # Automated test runner
 ├── web/
-│   ├── app.py           # Flask web server
+│   ├── app.py              # Flask web server
 │   ├── static/
 │   │   ├── css/
-│   │   │   └── style.css       # UI styling
+│   │   │   └── style.css   # UI styling
 │   │   └── js/
-│   │       └── app.js          # Frontend logic
+│   │       └── app.js      # Frontend logic
 │   └── templates/
-│       └── index.html          # Web interface
-├── build/               # Compiled binaries (created by make)
-├── Makefile             # Build configuration
-├── .gitignore           # Git ignore rules
-└── README.md            # This file
+│       └── index.html      # Web interface
+├── Dockerfile              # Container build for Render
+├── render.yaml             # Render service config
+├── .gitignore              # Git ignore rules
+└── README.md               # This file
 ```
